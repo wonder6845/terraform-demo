@@ -44,10 +44,10 @@ variable "create_ddos_plan" {
 #   default     = []
 # }
 
-# variable "create_network_watcher" {
-#   description = "Controls if Network Watcher resources should be created for the Azure subscription"
-#   default     = true
-# }
+variable "create_network_watcher" {
+  description = "Controls if Network Watcher resources should be created for the Azure subscription"
+  default     = true
+}
 
 # variable "subnets" {
 #   description = "Map of subnet configurations"

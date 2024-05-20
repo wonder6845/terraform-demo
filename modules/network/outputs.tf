@@ -48,7 +48,7 @@ output "resource_group_location" {
 #   value       = var.create_ddos_plan ? element(concat(azurerm_network_ddos_protection_plan.ddos.*.id, [""]), 0) : null
 # }
 
-# output "network_watcher_id" {
-#   description = "ID of Network Watcher"
-#   value       = var.create_network_watcher != false ? element(concat(azurerm_network_watcher.nwatcher.*.id, [""]), 0) : null
-# }
+output "network_watcher_id" {
+  description = "ID of Network Watcher"
+  value       = var.create_network_watcher != false ? element(concat(azurerm_network_watcher.nwatcher.*.id, [""]), 0) : null
+}
