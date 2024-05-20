@@ -52,3 +52,7 @@ output "network_watcher_id" {
   description = "ID of Network Watcher"
   value       = var.create_network_watcher != false ? element(concat(azurerm_network_watcher.nwatcher.*.id, [""]), 0) : null
 }
+
+output "network_watcher_id" {
+  value = var.create_network_watcher ? azurerm_network_watcher.nwatcher[0].id : null
+}

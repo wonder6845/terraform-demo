@@ -55,9 +55,16 @@ resource "azurerm_network_ddos_protection_plan" "ddos" {
 # Network Watcher - Default is "true"
 #-------------------------------------
 resource "azurerm_resource_group" "nwatcher" {
-  count    = var.create_network_watcher != false ? 1 : 0
+  count    = var.create_network_watcher && !var.existing_network_watcher_rg ? 1 : 0
   name     = "NetworkWatcherRG"
   location = local.location
-  tags     = merge({ "Name" = "NetworkWatcherRG" }, var.tags, )
+  tags     = merge({ "Name" = "NetworkWatcherRG" }, var.tags)
 }
 
+resource "azurerm_network_watcher" "nwatcher" {
+  count               = var.create_network_watcher && !var.existing_network_watcher_rg ? 1 : 0
+  name                = "NetworkWatcher_${local.location}"
+  location            = local.location
+  resource_group_name = var.create_network_watcher && !var.existing_network_watcher_rg ? azurerm_resource_group.nwatcher[0].name : "NetworkWatcherRG"
+  tags                = merge({ "Name" = format("%s", "NetworkWatcher_${local.location}") }, var.tags)
+}

@@ -33,7 +33,11 @@ variable "create_ddos_plan" {
   default     = false
 }
 
-
+variable "existing_network_watcher_rg" {
+  description = "Flag to determine if the Network Watcher resource group already exists"
+  type        = bool
+  default     = false
+}
 # variable "ddos_plan_name" {
 #   description = "The name of AzureNetwork DDoS Protection Plan"
 #   default     = "azureddosplan01"
