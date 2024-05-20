@@ -1,11 +1,12 @@
 module "vnet" {
 
   source = "../../modules/network"
-  resource_group_name = "testme"
-  location = "koreacentral"
+  resource_group_name = var.resource_group_name
+  location = var.location
 
-  vnet_name = "testme-vnet"
-  vnet_address_space = ["10.0.0.0/16"]  
+  vnet_name = var.vnet_name
+  vnet_address_space = var.vnet_address_space
 
-  create_network_watcher = true
+  create_network_watcher = false
+  subnets = var.subnets
 }
