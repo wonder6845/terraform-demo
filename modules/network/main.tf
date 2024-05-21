@@ -68,7 +68,9 @@ resource "azurerm_network_watcher" "nwatcher" {
   resource_group_name = var.create_network_watcher && !var.existing_network_watcher_rg ? azurerm_resource_group.nwatcher[0].name : "NetworkWatcherRG"
   tags                = merge({ "Name" = format("%s", "NetworkWatcher_${local.location}") }, var.tags)
 }
-
+#--------------------------------------------
+# Ddos protection plan - Default is "false"
+#--------------------------------------------
 
 resource "azurerm_subnet" "subnet" {
   for_each = var.subnets
@@ -122,16 +124,26 @@ resource "azurerm_subnet" "subnet" {
 #   network_security_group_name = azurerm_network_security_group.example.name
 # }
 
+
+# Source code for creating configured rules for NSG
 resource "azurerm_network_security_group" "nsg" {
   for_each            = var.subnets
   name                = lower("nsg_${each.key}_in")
   resource_group_name = local.resource_group_name
   location            = local.location
-  tags                = merge({ "ResourceName" = lower("nsg_${each.key}_in") }, var.tags, )
+  tags                = merge({
+                           "ResourceName" = lower("nsg_${each.key}_in"),
+                           "InboundRules" = jsonencode(lookup(each.value, "nsg_inbound_rules", [])),
+                           "OutboundRules" = jsonencode(lookup(each.value, "nsg_outbound_rules", []))
+                         }, var.tags)
+
   dynamic "security_rule" {
-    for_each = concat(lookup(each.value, "nsg_inbound_rules", []), lookup(each.value, "nsg_outbound_rules", []))
+    for_each = concat(
+                lookup(each.value, "nsg_inbound_rules", []),
+                lookup(each.value, "nsg_outbound_rules", [])
+              )
     content {
-      name                       = security_rule.value[0] == "" ? "Default_Rule" : security_rule.value[0]
+      name                       = replace(security_rule.value[0], " ", "_") == "" ? "Default_Rule" : replace(security_rule.value[0], " ", "_")
       priority                   = security_rule.value[1]
       direction                  = security_rule.value[2] == "" ? "Inbound" : security_rule.value[2]
       access                     = security_rule.value[3] == "" ? "Allow" : security_rule.value[3]

@@ -69,8 +69,8 @@ variable "subnets" {
         actions = list(string)
       })
     }))
-    nsg_inbound_rules  = optional(list(list(string)))
-    nsg_outbound_rules = optional(list(list(string)))
+    nsg_inbound_rules  = optional(list(list(string)), [])
+    nsg_outbound_rules = optional(list(list(string)), [])
   }))
   default = {}
 }
