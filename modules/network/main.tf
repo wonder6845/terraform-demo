@@ -97,6 +97,31 @@ resource "azurerm_subnet" "subnet" {
 #-------------------------------------
 # NSG - Default is "false"
 #-------------------------------------
+# resource "azurerm_resource_group" "example" {
+#   name     = "acceptanceTestResourceGroup1"
+#   location = "West US"
+# }
+
+# resource "azurerm_network_security_group" "example" {
+#   name                = "acceptanceTestSecurityGroup1"
+#   location            = azurerm_resource_group.example.location
+#   resource_group_name = azurerm_resource_group.example.name
+# }
+
+# resource "azurerm_network_security_rule" "example" {
+#   name                        = "test123"
+#   priority                    = 100
+#   direction                   = "Outbound"
+#   access                      = "Allow"
+#   protocol                    = "Tcp"
+#   source_port_range           = "*"
+#   destination_port_range      = "*"
+#   source_address_prefix       = "*"
+#   destination_address_prefix  = "*"
+#   resource_group_name         = azurerm_resource_group.example.name
+#   network_security_group_name = azurerm_network_security_group.example.name
+# }
+
 resource "azurerm_network_security_group" "nsg" {
   for_each            = var.subnets
   name                = lower("nsg_${each.key}_in")
@@ -122,6 +147,6 @@ resource "azurerm_network_security_group" "nsg" {
 
 resource "azurerm_subnet_network_security_group_association" "nsg-assoc" {
   for_each                  = var.subnets
-  subnet_id                 = azurerm_subnet.snet[each.key].id
+  subnet_id                 = azurerm_subnet.subnet[each.key].id
   network_security_group_id = azurerm_network_security_group.nsg[each.key].id
 }

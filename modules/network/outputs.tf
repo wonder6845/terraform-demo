@@ -30,7 +30,6 @@ output "virtual_network_id" {
 
 output "subnet_ids" {
   description = "The IDs of the subnets"
-  
   value       = { for s in azurerm_subnet.subnet : s.name => s.id }
 }
 
