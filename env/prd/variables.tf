@@ -7,17 +7,17 @@ variable "vnet_name" {
 }
 
 variable "location" {
-  
+
 }
 
 variable "vnet_address_space" {
-  default = ["10.0.0.0/16"]  
+  default = ["10.0.0.0/16"]
 }
 variable "subnets" {
   description = "Map of subnet configurations"
   type = map(object({
-    subnet_name                         = string
-    subnet_address_prefix               = list(string)
+    subnet_name           = string
+    subnet_address_prefix = list(string)
     # service_endpoints                   = list(string)
     # service_endpoint_policy_ids         = list(string)
     # private_endpoint_network_policies_enabled     = bool

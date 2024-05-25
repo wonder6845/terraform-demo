@@ -24,8 +24,8 @@ resource "azurerm_resource_group" "rg" {
 
 resource "azurerm_virtual_network" "vnet" {
   name                = var.vnet_name
-  location            = local.location
-  resource_group_name = local.resource_group_name
+  location            = var.location
+  resource_group_name = var.resource_group_name
   address_space       = var.vnet_address_space
   dns_servers         = var.dns_servers
   tags = merge({ "Name" = format("%s", var.vnet_name) }, var.tags, )
@@ -99,31 +99,6 @@ resource "azurerm_subnet" "subnet" {
 #-------------------------------------
 # NSG - Default is "false"
 #-------------------------------------
-# resource "azurerm_resource_group" "example" {
-#   name     = "acceptanceTestResourceGroup1"
-#   location = "West US"
-# }
-
-# resource "azurerm_network_security_group" "example" {
-#   name                = "acceptanceTestSecurityGroup1"
-#   location            = azurerm_resource_group.example.location
-#   resource_group_name = azurerm_resource_group.example.name
-# }
-
-# resource "azurerm_network_security_rule" "example" {
-#   name                        = "test123"
-#   priority                    = 100
-#   direction                   = "Outbound"
-#   access                      = "Allow"
-#   protocol                    = "Tcp"
-#   source_port_range           = "*"
-#   destination_port_range      = "*"
-#   source_address_prefix       = "*"
-#   destination_address_prefix  = "*"
-#   resource_group_name         = azurerm_resource_group.example.name
-#   network_security_group_name = azurerm_network_security_group.example.name
-# }
-
 
 # Source code for creating configured rules for NSG
 resource "azurerm_network_security_group" "nsg" {
