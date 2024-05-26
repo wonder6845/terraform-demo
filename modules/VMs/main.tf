@@ -718,4 +718,4 @@ resource "azurerm_virtual_machine_extension" "extensions" {
   }
 
   depends_on = [azurerm_virtual_machine_data_disk_attachment.attachment]
-} 
+}
