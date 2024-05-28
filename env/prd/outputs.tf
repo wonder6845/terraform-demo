@@ -23,3 +23,11 @@ output "subnet_ids" {
   description = "The IDs of the subnets"
   value       = module.vnet.subnet_ids
 }
+
+output "public_ip_address_ids" {
+  value = [for pip in azurerm_public_ip.pip : pip.ip_address]
+}
+
+output "linux_public_ip" {
+  value = try(data.azurerm_public_ip.pip[0].ip_address, null)
+}

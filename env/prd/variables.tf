@@ -62,3 +62,9 @@ variable "size" {
   default  = "Standard_F2"
   nullable = false
 }
+
+variable "create_disk_encryption_resources" {
+  description = "Flag to determine whether to create disk encryption resources"
+  type        = bool
+  default     = false
+}

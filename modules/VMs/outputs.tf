@@ -5,12 +5,12 @@ output "data_disk_ids" {
 
 output "network_interface_id" {
   description = "Id of the vm nic that created by this module. `null` if `var.network_interface_ids` is provided."
-  value       = try(azurerm_network_interface.vm[0].id, null)
+  value       = try(azurerm_network_interface.nic[0].id, null)
 }
 
 output "network_interface_private_ip" {
   description = "Private ip address of the vm nic that created by this module. `null` if `var.network_interface_ids` is provided."
-  value       = try(azurerm_network_interface.vm[0].private_ip_address, null)
+  value       = try(azurerm_network_interface.nic[0].private_ip_address, null)
 }
 
 output "vm_admin_username" {

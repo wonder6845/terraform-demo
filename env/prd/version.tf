@@ -8,6 +8,14 @@ terraform {
       source  = "hashicorp/random"
       version = "~>3.0"
     }
+    curl = {
+      source  = "anschoewe/curl"
+      version = "1.0.2"
+    }
+    tls = {
+      source  = "hashicorp/tls"
+      version = "3.0.0"
+    }    
   }
   cloud {
     organization = "minpyo"
@@ -16,6 +24,7 @@ terraform {
       name = "terraform-demo"
     }
   }
+
 }
 provider "azurerm" {
   features {

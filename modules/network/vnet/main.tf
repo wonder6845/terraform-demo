@@ -103,11 +103,11 @@ resource "azurerm_subnet" "subnet" {
 # Source code for creating configured rules for NSG
 resource "azurerm_network_security_group" "nsg" {
   for_each            = var.subnets
-  name                = lower("nsg_${each.key}_in")
+  name                = lower("nsg-${each.key}-in")
   resource_group_name = local.resource_group_name
   location            = local.location
   tags                = merge({
-                           "ResourceName" = lower("nsg_${each.key}_in"),
+                           "ResourceName" = lower("nsg-${each.key}-in"),
                            "InboundRules" = jsonencode(lookup(each.value, "nsg_inbound_rules", [])),
                            "OutboundRules" = jsonencode(lookup(each.value, "nsg_outbound_rules", []))
                          }, var.tags)

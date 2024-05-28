@@ -541,7 +541,7 @@ locals {
   }
 }
 
-resource "azurerm_network_interface" "vm" {
+resource "azurerm_network_interface" "nic" {
   count = var.new_network_interface != null ? 1 : 0
 
   location                      = var.location
@@ -589,7 +589,7 @@ resource "azurerm_network_interface" "vm" {
 
 locals {
   network_interface_ids = var.new_network_interface != null ? [
-    azurerm_network_interface.vm[0].id
+    azurerm_network_interface.nic[0].id
   ] : var.network_interface_ids
 }
 
