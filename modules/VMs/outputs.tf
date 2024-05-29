@@ -3,14 +3,14 @@ output "data_disk_ids" {
   value       = [for attachment in azurerm_virtual_machine_data_disk_attachment.attachment : attachment.id]
 }
 
-output "network_interface_id" {
+output "network_interface_ids" {
   description = "Id of the vm nic that created by this module. `null` if `var.network_interface_ids` is provided."
-  value       = try(azurerm_network_interface.nic[0].id, null)
+  value       = try(azurerm_network_interface.nic[*].id, null)
 }
 
 output "network_interface_private_ip" {
   description = "Private ip address of the vm nic that created by this module. `null` if `var.network_interface_ids` is provided."
-  value       = try(azurerm_network_interface.nic[0].private_ip_address, null)
+  value       = try(azurerm_network_interface.nic[*].private_ip_address, null)
 }
 
 output "vm_admin_username" {

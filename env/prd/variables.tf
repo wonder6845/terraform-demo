@@ -1,3 +1,16 @@
+variable "env" {
+  default = "prd"
+}
+
+variable "purpose" {
+  default = "demo"
+}
+
+variable "create_network_watcher" {
+  type = bool
+  default = false
+}
+
 variable "resource_group_name" {
   default = "pyo-rg"
 }
@@ -67,4 +80,30 @@ variable "create_disk_encryption_resources" {
   description = "Flag to determine whether to create disk encryption resources"
   type        = bool
   default     = false
+}
+
+variable "vms" {
+  description = "List of VMs to create"
+  type = list(object({
+    vm_name = string
+    os_disk = object({
+      caching = string
+      storage_account_type = string
+    })
+    admin_username = optional(string, "azureuser")
+    size = string
+    subnet = string
+    custom_data = optional(string)
+    os_simple = optional(string)
+    source_image_id = optional(string)
+    source_image_reference = optional(map(string))
+  }))
+}
+
+variable "admin_username" {
+  default = "azureuser"
+}
+
+variable "pip_count" {
+  
 }
