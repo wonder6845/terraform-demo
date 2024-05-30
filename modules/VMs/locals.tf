@@ -4,4 +4,3 @@ locals {
   network_interface_ip_configuration_indexes = var.new_network_interface == null ? [] : toset(range(length(var.new_network_interface.ip_configurations)))
   patch_mode                                 = coalesce(var.patch_mode, local.is_linux ? "ImageDefault" : "AutomaticByOS")
 }
-
