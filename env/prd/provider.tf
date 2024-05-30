@@ -17,15 +17,25 @@ terraform {
       version = "3.0.0"
     }    
   }
-  cloud {
+  backend "remote" {
+    hostname = "app.terraform.io"
     organization = "minpyo"
 
     workspaces {
-      name = "terraform-demo"
+      prefix = "pyo"
     }
   }
-
 }
+
+  # backend "remote"{
+  #   hostname = "app.terraform.io"
+  #   organization = "minpyo"
+  #   workspaces {
+  #     prefix = "my-demo"
+  #   }
+  # }
+
+
 provider "azurerm" {
   features {
     resource_group {
