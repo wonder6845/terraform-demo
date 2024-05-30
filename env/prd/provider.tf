@@ -17,12 +17,12 @@ terraform {
       version = "3.0.0"
     }    
   }
-  backend "remote" {
-    hostname = "app.terraform.io"
+
+  cloud {
     organization = "minpyo"
 
     workspaces {
-      prefix = "pyo"
+      name = "pyo-terraform-workspace"
     }
   }
 }
